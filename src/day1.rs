@@ -13,10 +13,11 @@ pub fn input_generator(input: &str) -> Vec<Vec<usize>> {
         .collect()
 }
 
-#[aoc(day1, part1)]
-pub fn solve_part1(elves: &[Vec<usize>]) -> usize {
-    elves.iter()
+#[aoc(day1, part2)]
+pub fn solve_part2(elves: &[Vec<usize>]) -> usize {
+    let mut totals: Vec<usize> = elves.iter()
         .map(|elf| elf.iter().sum())
-        .max()
-        .unwrap()
+        .collect();
+    totals.sort_unstable();
+    totals.iter().rev().take(3).sum()
 }
