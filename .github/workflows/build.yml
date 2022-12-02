@@ -1,0 +1,33 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cargo Cache
+        uses: actions/cache@v3
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            cargo-
+      - name: Install Advent of Code
+        run: cargo install cargo-aoc
+      - name: Build
+        run: cargo build --verbose
+      - name: Advent of Code 🎄
+        run: cargo aoc 2>/dev/null
