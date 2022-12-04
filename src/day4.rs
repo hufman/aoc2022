@@ -18,9 +18,20 @@ fn contains_all(left: &Range<u16>, needles: &Range<u16>) -> bool {
     let mut my_needles = needles.clone();
     my_needles.all(|n| left.contains(&n))
 }
+fn contains_any(left: &Range<u16>, needles: &Range<u16>) -> bool {
+    let mut my_needles = needles.clone();
+    my_needles.any(|n| left.contains(&n))
+}
+
 #[aoc(day4, part1)]
 pub fn solve_part1(assignments: &Vec<(Range<u16>, Range<u16>)>) -> usize {
     assignments.into_iter()
         .filter(|(a, b)| contains_all(a, b) || contains_all(b, a))
+        .count()
+}
+#[aoc(day4, part2)]
+pub fn solve_part2(assignments: &Vec<(Range<u16>, Range<u16>)>) -> usize {
+    assignments.into_iter()
+        .filter(|(a, b)| contains_any(a, b) || contains_all(b, a))
         .count()
 }
